@@ -60,8 +60,7 @@ public class Percolation {
     // is i,j open?
     int a = i - 1;
     int b = j - 1;
-    if (grid[a * N + b] == false) return true;
-    else                          return false;
+    return grid[a * N + b];
   }
 
   public boolean isFull(int i, int j) {
