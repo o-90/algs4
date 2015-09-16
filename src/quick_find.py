@@ -9,6 +9,12 @@ class QuickFindUF(object):
         self.idx = range(N)
         self.count = 0
 
+    def count(self):
+        '''
+        keep track of connected components
+        '''
+        return self.count
+
     def find(self, p):
         '''
         return idx of p
