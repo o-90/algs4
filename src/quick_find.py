@@ -9,11 +9,17 @@ class QuickFindUF(object):
         self.idx = range(N)
         self.count = 0
 
+    def find(self, p):
+        '''
+        return idx of p
+        '''
+        return self.idx[p]
+
     def connected(self, p, q):
         '''
         check if p & q share a connection.
         '''
-        if self.idx[p] == self.idx[q]:
+        if self.find(p) == self.find(q):
             return True
         else:
             return False
@@ -22,12 +28,13 @@ class QuickFindUF(object):
         '''
         union p & q together.
         '''
-        p_id = self.idx[p]
-        q_id = self.idx[q]
+        p_id = self.find(p)
+        q_id = self.find(q)
 
-        for i in xrange(self.N):
-            if self.idx[i] == p_id:
-                self.idx[i] = q_id
+        if not p_id == q_id:
+            for i in xrange(self.N):
+                if self.idx[i] == p_id:
+                    self.idx[i] = q_id
 
 # test client
 if __name__ == "__main__":
