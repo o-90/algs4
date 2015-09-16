@@ -15,9 +15,10 @@ public class Percolation {
         grid[i*N+j] = false;
 
     // make dummy connections for top and bottom row
-    grid[N * N + 1] = true;
-    grid[N * N + 2] = true;
+    grid[N * N]     = true;  //grid[N * N + 1] = true; <-- bug
+    grid[N * N + 1] = true;  //grid[N * N + 2] = true; <-- bug
 
+    this.N=N;
     uf = new WeightedQuickUnionUF(N*N+2);
   }
 
@@ -29,16 +30,16 @@ public class Percolation {
     if (!grid[a * N + b]) {
       grid[a * N + b] = true;
       // up
-      if((a-1) > 0 && b > 0 && (a-1) < N && b < N && grid[(a-1)*N+b])
+      if((a-1) >= 0 && b >= 0 && (a-1) < N && b < N && grid[(a-1)*N+b])
         uf.union(a*N+b, (a-1)*N+b);
       // down
-      if((a+1) > 0 && b > 0 && (a+1) < N && b < N && grid[(a+1)*N+b])
+      if((a+1) >= 0 && b >= 0 && (a+1) < N && b < N && grid[(a+1)*N+b])
         uf.union(a*N+b, (a+1)*N+b);
       // left
-      if(a > 0 && (b-1) > 0 && a < N && (b-1) < N && grid[a*N+(b-1)])
+      if(a >= 0 && (b-1) >= 0 && a < N && (b-1) < N && grid[a*N+(b-1)])
         uf.union(a*N+b, a*N+(b-1));
       // right
-      if(a > 0 && (b+1) > 0 && a < N && (b+1) < N && grid[a*N+(b+1)])
+      if(a >= 0 && (b+1) >= 0 && a < N && (b+1) < N && grid[a*N+(b+1)])
         uf.union(a*N+b, a*N+(b+1));
       if (i == 1)
         uf.union(a * N + b, N * N);
@@ -66,8 +67,14 @@ public class Percolation {
     return uf.connected(N * N, N * N + 1);
   }
 
+  // test client
   public static void main(String[] args) {
     Percolation p = new Percolation(4);
-    StdOut.println(p + " ");
+    double r = 0.6;
+    for (int i=0; i<4; i++)
+      for (int j=0; j<4; j++)
+        if (StdRandom.bernoulli(r))
+          p.open(i+1, j+1);
+    StdOut.println("Does the system percolate?\n" + p.percolates());
   }
 }
