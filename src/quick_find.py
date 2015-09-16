@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class QuickFindUF(object):
     '''
     union find
@@ -18,8 +20,8 @@ class QuickFindUF(object):
 
     def union(self, p, q):
         '''
-        union p & q together
-        ''' 
+        union p & q together.
+        '''
         p_id = self.idx[p]
         q_id = self.idx[q]
 
