@@ -1,39 +1,24 @@
 # -*- coding: utf-8 -*-
 
 class QuickFindUF(object):
-    '''
-    union find
-    '''
     def __init__(self, N):
         self.N = N
         self.idx = range(N)
         self.count = 0
 
     def count(self):
-        '''
-        keep track of connected components
-        '''
         return self.count
 
     def find(self, p):
-        '''
-        return idx of p
-        '''
         return self.idx[p]
 
     def connected(self, p, q):
-        '''
-        check if p & q share a connection.
-        '''
         if self.find(p) == self.find(q):
             return True
         else:
             return False
 
     def union(self, p, q):
-        '''
-        union p & q together.
-        '''
         p_id = self.find(p)
         q_id = self.find(q)
 
@@ -41,6 +26,16 @@ class QuickFindUF(object):
             for i in xrange(self.N):
                 if self.idx[i] == p_id:
                     self.idx[i] = q_id
+
+class QuickUnionUF(QuickFindUF):
+    def __init__(self, N):
+        super(QuickUnionUF, self).__init__(N)
+        self.idx = range(N)
+        self.count = 0
+
+    def union(self, p, q):
+        pass
+
 
 # test client
 if __name__ == "__main__":
