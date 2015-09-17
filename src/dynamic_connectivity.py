@@ -4,7 +4,7 @@ class QuickFindUF(object):
     def __init__(self, N):
         self.N = N
         self.idx = range(N)
-        self.count = 0
+        self.count = self.N
 
     def count(self):
         return self.count
@@ -31,15 +31,55 @@ class QuickUnionUF(QuickFindUF):
     def __init__(self, N):
         super(QuickUnionUF, self).__init__(N)
         self.idx = range(N)
-        self.count = 0
+        self.count = self.N
+
+    def find(self, p, q):
+        while p != self.idx[p]:
+            p = self.idx[p];
+
+        return p;
 
     def union(self, p, q):
-        pass
+        i = self.find(p)
+        j = self.find(q)
+        if i == j:
+            pass
 
+        id[i] = j
 
-# test client
+        self.count -= 1
+
+class WeightedQuickUnionUF(QuickUnionUF):
+    def __init__(self, N):
+        super(WeightedQuickUnionUF, self).__init__(N)
+        self.idx = range(N)
+        self.sz = [1]*N
+        self.count = self.N
+
+    def find(self, p):
+        while p != self.idx[p]:
+            p = self.idx[p]
+
+        return p;
+
+    def union(self, p, q):
+        i = self.find(p)
+        j = self.find(q)
+        if i == j:
+            pass
+
+        if self.sz[i] < self.sz[j]:
+            self.idx[i] = j
+            self.sz[j] += self.sz[i]
+        else:
+            self.idx[j] = i
+            self.sz[i] += self.sz[j]
+
+        self.count -= 1
+
+### test client
 if __name__ == "__main__":
-    uf = QuickFindUF(100)
+    uf = WeightedQuickUnionUF(100)
     uf.union(6, 5)
     uf.union(2, 3)
     uf.union(1, 4)
