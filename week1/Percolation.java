@@ -4,7 +4,8 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-  private int N=0;
+
+  private int N = 0;
   private boolean[] grid = null;
   private WeightedQuickUnionUF uf = null;
 
@@ -48,9 +49,10 @@ public class Percolation {
       // right
       if(a >= 0 && (b+1) >= 0 && a < N && (b+1) < N && grid[a*N+(b+1)])
         uf.union(a * N + b, a * N + (b + 1));
-
+      // top
       if (i == 1)
         uf.union(a * N + b, N * N);
+      // bottom
       if (i == N)
         uf.union(a * N + b, N * N + 1);
     }
@@ -67,7 +69,7 @@ public class Percolation {
     // is i,j connected to top node?
     int a = i - 1;
     int b = j - 1;
-    return uf.connected(N * N + 1, a * N + b);
+    return uf.connected(N * N, a * N + b);
   }
 
   public boolean percolates()
@@ -75,15 +77,36 @@ public class Percolation {
 
   // test client
   public static void main(String[] args) {
-    double r = 0.6;
-    int n = 20;
 
-    Percolation p = new Percolation(n);
-    for (int i=0; i<n; i++)
-      for (int j=0; j<n; j++)
-        if (StdRandom.bernoulli(r))
-          p.open(i+1, j+1);
+    int [] count = new int[20];
+    double r = 0.61;
+    int T = 20;
+    int n = 5;
+    double mean = 0.0;
+    double stddev = 0.0;
 
-    StdOut.println("Does the system percolate?\n" + p.percolates());
+    for (int t=0; t<T; t++) {
+
+      Percolation p = new Percolation(n);
+      for (int i=1; i<=n; i++) {
+        for (int j=1; j<=n; j++) {
+          if (!StdRandom.bernoulli(r)) {
+            p.open(i, j);
+          }
+        }
+      }
+      if (p.percolates()) count[t] = 1;
+      else                count[t] = 0;
+    }
+    for (int i=0; i<20; i++)
+      mean += count[i];
+
+    mean /= T;
+    for (int i=0; i<20; i++)
+      stddev += (count[i] - mean) * (count[i] - mean);
+
+    stddev /= (T - 1);
+    StdOut.println("percentage that percolates\t\t" + mean);
+    StdOut.println("standard deviation\t\t" + stddev);
   }
 }
