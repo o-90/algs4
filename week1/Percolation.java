@@ -10,6 +10,8 @@ public class Percolation {
 	private WeightedQuickUnionUF uf = null;
 
 	public Percolation(int N) {
+		if (N <= 0)
+			throw new java.lang.IllegalArgumentException();
 
 		// initialize empty grid
 		grid = new boolean[N * N + 2];
@@ -58,6 +60,10 @@ public class Percolation {
 
     public boolean isOpen(int i, int j) {
     	// is i,j open?
+
+    	if (i < 1 || j < 1 || i > N || j > N)
+    		throw new java.lang.IndexOutOfBoundsException();
+
     	int a = i - 1;
     	int b = j - 1;
     	return grid[a * N + b];
@@ -65,6 +71,10 @@ public class Percolation {
 
     public boolean isFull(int i, int j) {
     	// is i,j connected to top node?
+
+    	if (i < 1 || j < 1 || i > N || j > N)
+    		throw new java.lang.IndexOutOfBoundsException();
+
     	int a = i - 1;
     	int b = j - 1;
     	return uf.connected(N * N, a * N + b);
