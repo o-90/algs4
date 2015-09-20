@@ -7,44 +7,49 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class Deque<Item> implements Iterable<Item> {
 
-  private Node first;
-  private Node last;
-  private int  N;
+	private Node first;
+	private Node last;
+	private int  N;
 
-  private class Node {
-    Item item;
-    Node next;
-    Node prev;
+	private class Node {
+        Item item;
+	    Node next;
+	    Node prev;
 	}
 
-  public Deque() {
-  }
+	public Deque() {
 
-  public boolean isEmpty() {
-    return true;
-  }
+	}
 
-  public int size() {
-    return 1;
-  }
+	public boolean isEmpty() {
+		return true;
+	}
 
-  public void addFist(Item item) {
-  }
+	public int size() {
+		return 1;
+	}
 
-  public void addLast(Item item) {
-  }
+	public void addFist(Item item) {
 
-  public Item removeFirst() {
-    //return item;
-  }
+	}
 
-  public Item removeLast() {
-    //return item;
-  }
+	public void addLast(Item item) {
 
-  public Iterator<Item> iterator() {
-  }
+	}
 
-  public static void main(String[] args) {
-  }
+	public Item removeFirst() {
+	//return item;
+	}
+
+	public Item removeLast() {
+	//return item;
+	}
+
+	public Iterator<Item> iterator() {
+
+	}
+
+	public static void main(String[] args) {
+
+	}
 }
