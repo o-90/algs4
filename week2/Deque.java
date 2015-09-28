@@ -98,11 +98,27 @@ public class Deque<Item> implements Iterable<Item> {
     public boolean hasNext()
     {  return current != null;  }
 
-    public void remove() {  /*  add exception handing here */ }
+    public void remove() {
+      throw new java.lang.UnsupportedOperationException();
+    }
     public Item next() {
+      if (!hasNext())
+        throw new java.util.NoSuchElementException();
       Item item = current.item;
       current = current.next;
       return item;
     }
+  }
+  public static void main(String[] args) {
+    Deque<Double> deque = new Deque<Double>();
+    deque.addFirst(1.0);
+    deque.addLast(2.0);
+    deque.addFirst(3.0);
+    deque.addLast(4.0);
+    StdOut.println("size     := " + deque.size());
+    StdOut.println("Removed " + deque.removeLast());
+    StdOut.println("new size := " + deque.size());
+    for (Double d : deque)
+      StdOut.println(d);
   }
 }
